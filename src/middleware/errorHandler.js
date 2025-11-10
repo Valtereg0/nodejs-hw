@@ -4,7 +4,7 @@ export const errorHandler = ((err, req, res, next) => {
 
  if (err instanceof HttpError) {
     return res.status(err.status).json({
-      error: err.message,
+      message: err.message || err.name,
     });
   }
 
@@ -12,6 +12,6 @@ export const errorHandler = ((err, req, res, next) => {
   const isProd = process.env.NODE_ENV === 'production';
 
   res.status(500).json({
-    error: isProd ? 'Something went wrong. Please try again later.' : err.message,
+    message: isProd ? 'Something went wrong. Please try again later.' : err.message,
   });
 });
