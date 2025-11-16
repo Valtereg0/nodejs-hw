@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import { connectMongoDB } from './db/connectMongoDB.js';
+import { errors } from 'celebrate';
 
 
 import { notFoundHandler } from './middleware/notFoundHandler.js';
@@ -33,7 +34,7 @@ app.use((req, res, next) => {
 app.use(notesRoutes);
 
 app.use(notFoundHandler);
-
+app.use(errors());
 app.use(errorHandler);
 
 await connectMongoDB();
