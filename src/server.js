@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import cookieParser from 'cookie-parser';
 import { connectMongoDB } from './db/connectMongoDB.js';
 import { errors } from 'celebrate';
 
@@ -9,6 +10,7 @@ import { errors } from 'celebrate';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import notesRoutes from './routes/notesRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 import { logger } from './middleware/logger.js';
 
 
@@ -21,6 +23,7 @@ const PORT = process.env.PORT ?? 3000;
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 app.use(logger);
 
 
@@ -30,7 +33,7 @@ app.use((req, res, next) => {
   next();
 });
 
-
+app.use(authRoutes);
 app.use(notesRoutes);
 
 app.use(notFoundHandler);
