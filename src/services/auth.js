@@ -10,8 +10,8 @@ return Session.create({
   userId,
   accessToken,
   refreshToken,
-  accessTokenValidUntil: FIFTEEN_MINUTES,
-  refreshTokenValidUntil: ONE_DAY,
+  accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+  refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
 });
 
 };

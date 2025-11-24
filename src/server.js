@@ -1,7 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import { connectMongoDB } from './db/connectMongoDB.js';
 import { errors } from 'celebrate';
@@ -20,18 +19,13 @@ const app = express();
 const PORT = process.env.PORT ?? 3000;
 
 
-app.use(helmet());
+
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use(logger);
 
 
-
-app.use((req, res, next) => {
-  console.log("Log time:", new Date());
-  next();
-});
 
 app.use(authRoutes);
 app.use(notesRoutes);
