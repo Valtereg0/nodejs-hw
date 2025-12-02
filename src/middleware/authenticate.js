@@ -27,7 +27,7 @@ export const authenticate = async (req, res, next) => {
   if (!user) {
     next(createHttpError(401));
     return;
-  }
+  } 
   req.user = user;
   next();
 };
