@@ -10,7 +10,7 @@ cloudinary.config({
 
 export const saveFileToCloudinary = async (buffer) => {
   return new Promise((resolve, reject) => {
-    const uploadStrem = cloudinary.uploader.upload_stream({
+    const uploadStream = cloudinary.uploader.upload_stream({
       folder: 'users/avatars',
       resource_type: 'image',
       overwrite: true,
@@ -20,7 +20,7 @@ export const saveFileToCloudinary = async (buffer) => {
     (error, result) => (error ? reject(error) : resolve(result))
     );
 
-    Readable(buffer).pipe(uploadStrem);
+    Readable.from(buffer).pipe(uploadStream);
 
   });
   };
