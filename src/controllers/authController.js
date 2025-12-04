@@ -98,7 +98,7 @@ export const refreshUserSession = async (req, res) => {
 };
 
 
-export const requestResetEmail = async (req, res) => {
+export const requestResetEmail = async (req, res, next) => {
   const { email } = req.body;
 
   const user = await User.findOne({ email });
@@ -126,10 +126,10 @@ export const requestResetEmail = async (req, res) => {
     from: process.env.SMTP_FROM,
     to: email,
     subject: 'Password Reset Request',
-    html: html,
+    html,
   });
   } catch {
-    throw createHttpError(500, 'Failed to send the email, please try again later');
+    return next(createHttpError(500, 'Failed to send the email, please try again later'));
   }
 
 res.status(200).json({ message: 'Password reset email sent successfully' });
